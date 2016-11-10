@@ -1,0 +1,338 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Stylish Article
+% LaTeX Template
+% Version 2.1 (1/10/15)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Mathias Legrand (legrand.mathias@gmail.com)
+% With extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% Modified for General Education at Ferris State University
+% by Dr. Clifton Franklund (CliftonFranklund@ferris.edu)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[fleqn,10pt]{SelfArx} % Document font size and equations flushed left
+\usepackage[english]{babel}         % Specify a different language here - english by default
+\usepackage{lipsum}                 % Required to insert dummy text. To be removed otherwise
+\usepackage{fancyhdr}               % Required to put the logo on the top of the first page
+\usepackage{float}                  % Extra help with figures and tables
+\usepackage{caption}                % Helps to format captions
+\captionsetup[table]{skip=3pt}      % Spacing after caption
+\usepackage{enumitem}               % Tightening lists
+\setlist[itemize]{itemsep=0mm}      % Tightening lists
+\usepackage[style=authoryear,doi=false,isbn=false,url=false,natbib=true,backend=biber]{biblatex}
+\bibliography{references}           % Point to the bibtex bibliography file
+\renewbibmacro{in:}{}               % Get rid of "in:" in journal reference citations
+
+%----------------------------------------------------------------------------------------
+%	COLUMNS
+%----------------------------------------------------------------------------------------
+
+\setlength{\columnsep}{0.55cm}      % Distance between the two columns of text
+\setlength{\fboxrule}{0.75pt}       % Width of the border around the abstract
+
+%----------------------------------------------------------------------------------------
+%	COLORS
+%----------------------------------------------------------------------------------------
+
+\definecolor{color1}{RGB}{0,0,0}         % Color of the article title (black)
+\definecolor{color2}{RGB}{255,255,255}   % Section heading text color (white)
+\definecolor{color3}{RGB}{178,34,34}     % Color of the boxes behind the abstract and headings (firebrick)
+
+%----------------------------------------------------------------------------------------
+%	HYPERLINKS
+%----------------------------------------------------------------------------------------
+
+\usepackage{hyperref}               % Required for hyperlinks
+\hypersetup{hidelinks,colorlinks,breaklinks=true,urlcolor=color3,citecolor=color3,linkcolor=color1,bookmarksopen=false,pdftitle={Title},pdfauthor={Author}}
+
+%----------------------------------------------------------------------------------------
+%	NO SECTION NUMBERS
+%----------------------------------------------------------------------------------------
+\setcounter{secnumdepth}{0}
+\setlength{\belowcaptionskip}{10pt}
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE INFORMATION
+%----------------------------------------------------------------------------------------
+
+\JournalInfo{General Education Assessment}     % Report information
+\Archive{Report 16(2) --- November 2016}           % Report identifier and date)
+
+\PaperTitle{Multiple Logistic Regression Analysis of NSSE Data to Explore Student Satisfaction and Retention} % Article title
+
+\Authors{Dr. Clifton Franklund\textsuperscript{1}} % Authors
+\affiliation{\textsuperscript{1}\textit{General Education Coordinator, Ferris State University}} % Author affiliation
+
+\Keywords{NSSE --- Logistic Regression --- Student Satifaction --- Retention}
+\newcommand{\keywordname}{Keywords} % Defines the keywords heading name
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\Abstract{This is where the abstract needs to be entered.~}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\flushbottom % Makes all text pages the same height
+
+\maketitle % Print the title and abstract box
+
+\tableofcontents % Print the contents section
+
+% Set up the first page to have the Ferris logo in the left
+\fancypagestyle{firststyle}
+{
+	\fancyhf{}
+	\fancyhead[L]{\includegraphics[height=0.55cm]{./art/logo.png}}
+}
+\thispagestyle{firststyle}
+
+
+%----------------------------------------------------------------------------------------
+%	INITIALIZE R PARAMETERS FOR THIS DOCUMENT
+%----------------------------------------------------------------------------------------
+
+<<packages, echo=FALSE, message=FALSE, warning=FALSE>>=
+
+#----------------------------------------------------------------------------------------
+#	INSTALL PACKAGES
+#----------------------------------------------------------------------------------------
+
+packages<-function(x){
+        x<-as.character(match.call()[[2]])
+        if (!require(x,character.only=TRUE)){
+                install.packages(pkgs=x,repos="http://cran.r-project.org")
+                require(x,character.only=TRUE)
+        }
+}
+packages(modeest)       # calculate mode
+packages(moments)       # calculate skew, kurtosis, etc.
+packages(weights)       # calculate weighted t-test
+packages(papeR)		# making LaTeX from some outputs
+packages(xtable)        # make nice tables of data
+packages(dplyr)         # handling tidy data neatly
+packages(ggplot2)       # make pretty pictures
+packages(forestplot)    # present meta-analysis
+@
+
+<<functions, echo=FALSE, message=FALSE, warning=FALSE>>=
+
+#----------------------------------------------------------------------------------------
+#	DEFINE FUNCTIONS
+#----------------------------------------------------------------------------------------
+
+
+
+
+@
+
+<<data, echo=FALSE, message=FALSE, warning=FALSE>>=
+
+#----------------------------------------------------------------------------------------
+#	LOAD DATA
+#----------------------------------------------------------------------------------------
+
+
+
+
+@
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+%---------------------------
+%>>>>>>>> EPIGRAPH  <<<<<<<<
+%---------------------------
+\begin{quote}
+\begin{center}
+\textit{Assessment is not a spreadsheet; \\ it's a conversation. --- Irmeli Halinen \footnote{This quote is from an interview with Irmeli Halinen, a Finnish assessment expert. \citep{Bower}}}
+\end{center}
+\end{quote}
+
+%---------------------------
+%>>>>>> INTRODUCTION  <<<<<<
+%---------------------------
+\section{Introduction} % The \section*{} command stops section numbering
+%\addcontentsline{toc}{section}{Introduction} % Adds this section to the table of contents
+
+This report is an actual analysis of real course-level assessment data from a 200-level Biology course. However, its primary purpose is to serve as a proof-of-concept for the new General Education assessment process at Ferris State University. Assessment is perhaps best viewed as a scholarly activity that is focused upon programmatic improvement. Such scholarly work should be built upon, and contribute to, the relevant professional literature \citep{Weimer2015}. To emphasize that reality, this report is formatted in the form of a journal article. This report, and ones like it, will be authored, published, and cited in future work to support the development and improvement of the General Education program at Ferris.
+
+\subsection{National Survey of Student Engagement} Many different approaches can be used to assess a General Education program; direct and indirect assessment can take place at the course, program, or institutional levels. The structure, strengths and weaknesses of each of these are highlighted elsewhere \citep{Allen2006a}. Regardless of the approach used, a quality program evaluation must possess five key attributes: utility, feasibility, propriety, accuracy, and accountability \citep{Yarbrough2011}. Both this report, and the assessment processes underlying it, are designed to satisfy these requirements.
+
+\subsection{Logistic regression analysis} The \textit{utility} of the assessment process is a measure of how useful it is to the relevant stakeholders. A broad sampling of our faculty are engaged in the section of assessment outcomes, collection of data, and interpretation of assessment findings. This involvement ensures that any results are viewed within an appropriate context, and increases their value for program evaluation. The automated nature of the data collection, aggregation, and analysis increases the \textit{feasibility} of this approach.
+
+\begin{equation}
+\ln\left[\frac{P_{i}}{1-P_{i}}\right]=\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\beta_{3}X_{3}+\beta_{n}X_{n}
+\end{equation}
+
+Much of the reports must still be authored by the General Education Coordinator. However, having the data manipulations and analysis done automatically greatly simplifies the task. \textit{Propriety} speaks to the ethical use of the data and results. Every effort has been made to ensure that the identities of all students and faculty involved in these studies is protected. No personally identifiable information will ever be included in these results. Furthermore, the General Education assessment results exist solely for the improvement of the General Education program -- the results will \underline{never} be used for the evaluation of specific courses or instructional personnel. The \textit{accuracy} of these reports is improved by the very nature of the analysis and reporting used. Meta-analyses \citep{Borenstein2011} are used to compare groups of related assessment results. This approach can account for variation in scoring and student ability between courses and provide an a more realistic overview of student competencies. The range of meta-data collected in addition to student evaluations will permit the testing of a variety of research hypotheses. This report is also a form of reproducible research \citep{Stodden2014}. This report is computationally reproducible because the code needed to manipulate the de-identified data, perform the analyses, and create the figures are included within the no-web (.Rnw) file itself. This approach was first described as "literate programming" in the 1980's \citep{Knuth1984}. The principle advantage to this approach is that anyone (at any time) can reproduce, critique, and extend these studies without needing to track down multiple documents, graphics files, and data sets. Finally, the \textit{accountability} of reports such as this one is safeguarded by the involvement of faculty in contextualizing the results. All reports will be shared with appropriate focus groups for their input. Their comments and recommendations for future actions will be summarized and included within the discussion section of each document.
+
+%---------------------------
+%>>>>>>>>> METHODS <<<<<<<<<
+%---------------------------
+\section{Methods}
+%\addcontentsline{toc}{section}{Methods} % Adds this section to the table of contents
+
+\subsection{Collection and aggregation of NSSE data}
+
+These workbook files contain personally identifiable information (PII) and are, therefore, subject to FERPA regulations. For this reason, they are not directly shared. Instead, they are permanently housed within the Proof\_of\_Concept folder under Core Competency: Natural Sciences in TracDat.
+
+\subsection{De-identification of student data}
+
+\subsection{Data provenance}
+Data provenance refers to a system that permits tracking of the origin, movement, modification, and utilization of data sets\citep{Buneman2001}. The provenance of General Education data will be explicitly declared to facilitate the reproducibility and extensibility of these studies.
+
+\paragraph{Location of public website files}
+All files related to this report can be found online at the Open Science Framework \citep{Nosek2012}. This site contains all of the files needed to reproduce this report from the de-identified data set. The site's url is \href{https://osf.io/t6u8m/}{https://osf.io/t6u8m/}.
+
+\paragraph{Session information}
+This report was written using RStudio \citep{Rstudio} and the R statistical programming language \citep{R}. These products are free to download for PC, Macintosh, and Linux operating systems. The following information pertains to the session parameters used to generate this report. If you have trouble reproducing this report, it may be due to different session parameters. You may contact \href{mailto:CliftonFranklund@ferris.edu}{Dr. Franklund} if you need assistance.
+
+% SESSION INFO INSERTED HERE
+<<Session, echo=FALSE, message=FALSE, comment=NA, results='asis'>>=
+session <- utils::toLatex(sessionInfo(), locale=FALSE, citations=FALSE)
+session
+#toLatex(session)
+@
+
+\paragraph{Processing instructions}
+This project produced a computationally reproducible assessment report (this document). Anyone wishing to recreate this report from the source document will need to install the following on their computer:
+\begin{enumerate}
+\item \href{https://www.r-project.org}{An installation of the R programming language}
+\item \href{https://www.rstudio.com/products/rstudio/download3/}{ An installation of the RStudio IDE}
+\item \href{https://www.latex-project.org/get/}{An installation of \LaTeX}
+\end{enumerate}
+
+The necessary source files include the de-identified data set (BIOL200Data.csv), no-web code file (Gen\_Ed\_Report\_16-01.Rnw), bibtex reference file (references.bib), and custom art file in the /art folder.
+
+To process the files, you must first open the .Rnw file in RStudio. Click on the "Compile PDF" button in the menu bar. The resulting tex file (Gen\_Ed\_Report\_16-01.tex) must be further processed to create the citations and internal links. This is done by running PDFLaTeX on the .tex file, followed by biber, and then PDFLaTeX twice more. This report will be the resulting pdf file.
+
+\paragraph{Citation of this work}
+All of the de-identified data, analysis code, and documentation that constitute this report project may be freely used, modified, and shared. The code file, Gen\_Ed\_Report\_16-01.Rnw, was adapted from that of Matias Legrand. Like the original file, it is released under the Creative Commons \href{http://creativecommons.org/licenses/by-nc-sa/3.0/}{CC BY-NC-SA 3.0} license. The de-identified data set, BIOL200Data.csv, is released under the Creative Commons \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 license}. All documentation, including README.md, Codebook.md, and this report, are released under the Creative Commons \href{https://creativecommons.org/licenses/by/4.0/}{CC-BY} licence. Any questions, comments, or suggestions may be sent to \href{mailto:CliftonFranklund@ferris.edu}{Dr. Franklund}.
+
+
+%---------------------------
+%>>>>>>>>> RESULTS <<<<<<<<<
+%---------------------------
+\section{Results}
+This document itself is the primary result of the project. It will be shared with members of the General Education Committee, Academic Senate, and the Department of Biological Sciences at Ferris State University. Their comments and suggestions will be included in the Discussion.
+
+\subsection{Summary statistics}
+
+
+
+
+
+\subsection{Retention analysis}
+Meta-analysis of the student performance was performed using R \citep{TQMP11-1-37}. This analysis resulted in a weighted average of rubric scores. This value was calculated using formula \ref{eq:weightX}. The value X\textsubscript{i} average rubric scores for the semesters, while P\textsubscript{i} is the weighting factor (student enrollment).
+
+
+\subsection{Student satisfaction analysis}
+\begin{equation}
+\bar{X}_w = \frac{\sum X_i P_i}{\sum P_i}
+\label{eq:weightX}
+\end{equation}
+
+The confidence interval for the weighted mean was calculated using the weighted variance. However, the weighted variance is actually not simple to calculate. Several different methods have been compared to bootstrapping \citep{Gatz1995a}. The most accurate method was initially described by Cochran \citep{Cochran1977} and that one was used in this study. The calculation to obtain the weighted variance is shown in formula \ref{eq:weightV}.
+
+\begin{equation}
+\begin{split}
+(SEM_w)^2 = \frac{n}{(n-1)(\sum P_i)^2}\big[ \sum(P_i X_i - \bar{P}\bar{X}_w)^2 \\
+- 2\bar{X}_w \sum(P_i - \bar{P})(P_i X_ i - \bar{P} \bar{X}_w) + \bar{X}_w^2 \sum(P_i - \bar{P})^2 \big]
+\label{eq:weightV}
+\end{split}
+\end{equation}
+
+
+
+
+A forest plot of the meta-analysis is shown in Figure \ref{fig:forest}. In this representation, each semester is illustrated as a separate line. The mean and 95\% confidence intervals for each semester are plotted in the right panel and their associated meta-data are given in the table to the left. The weighted average of all the data is plotted at the bottom of the figure. The width of the diamond indicates the 95\% confidence interval.
+
+
+\begin{table}[hbt]
+\caption{Interpretation of average rubric scores}
+\centering
+\begin{tabular}{c c}
+\textbf{Average score} & \textbf{Interpretation}   \\
+\hline
+0.00 to 0.99   &   Unsatisfactory                                \\
+1.00 to 1.79   &   Beginning                                     \\
+1.80 to 2.59   &   Developing                                    \\
+2.60 to 3.39   &   Proficient                                    \\
+3.40 to 4.00   &   Advanced                                      \\
+\end{tabular}
+\label{tab:regions}
+\end{table}
+
+
+%---------------------------
+%>>>>>>> DISCUSSION  <<<<<<<
+%---------------------------
+\section{Discussion}
+%\addcontentsline{toc}{section}{Results and Discussion} % Adds this section to the table of contents
+
+A novel approach for the collection, aggregation, analysis, and reporting of General Education assessment data has been developed. Computationally reproducible reports can easily be generated and distributed to improve the program over time. A meta-analysis of data collected from a 200-level Biology course was used as a proof-of-concept.
+
+
+\subsection{Faculty feedback}
+This report will be distributed to members of the General Education Committee, Academic Senate, and the Department of Biological Sciences.  These individuals will be asked to provide their comments, suggestions, and concerns about this report and the processes involved in its creation. What thoughts do you have about:
+
+\begin{itemize}[noitemsep]
+\item The data provenance plan?
+\item The format of this report?
+\item The content of this report?
+\item The utility of the meta-analysis?
+\item The public release of assessment results?
+\item Any other topics you can think of?
+\end{itemize}
+
+\subsection{Plan of action}
+After analyzing the data and considering the comments provided in the faculty feedback, the relevant General Education sub-committee members will make one or more recommendations for future work. Some of the possible actions could include:
+\begin{itemize}[noitemsep] % [noitemsep] removes whitespace between the items for a compact look
+\item No modifications -- continue to gather data
+\item Convene a training session to get better inter-course reliability
+\item Suggest modifications to the types of assignments that are used
+\item Suggest modifications to which data workbooks are used
+\item Suggest that instructors consider modifying the scope or sequence of instruction
+\item Modify the learning outcomes themselves
+\item Modify the competency as a whole
+\end{itemize}
+
+%---------------------------
+%>>>>> ACKNOWLEDGMENTS <<<<<
+%---------------------------
+\phantomsection
+\section*{Acknowledgments} % The \section*{} command stops section numbering
+\addcontentsline{toc}{section}{Acknowledgments} % Adds this section to the table of contents
+
+This report was based off of a \LaTeX{} template created by Mathias Legrand. The original file can be accessed at: \\
+\href{http://www.latextemplates.com/template/stylish-article}{http://www.latextemplates.com/template/stylish-article}. \\
+The valuable contributions made by the members of the General Education Committee, Academic Senate, and Department of Biological Sciences are also greatly appreciated.
+
+%---------------------------
+%>>>>>>> REFERENCES  <<<<<<<
+%---------------------------
+\phantomsection
+\printbibliography[title={References},heading=bibintoc]
+
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
